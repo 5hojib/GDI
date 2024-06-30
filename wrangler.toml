@@ -5,12 +5,14 @@ compatibility_date = "2023-08-23"
 [[rules]]
 type = "CommonJS"
 globs = ["src/**"]
-fallthrough = true # Allow subsequent rules to be used
+fallthrough = true
 
 [[rules]]
 type = "CommonJS"
 globs = ["src/worker.js"]
+fallthrough = true
 
 [[rules]]
 type = "CommonJS"
 globs = ["src/app.js"]
+fallthrough = true
