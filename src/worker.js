@@ -44,7 +44,7 @@ const authConfig = {
   "roots": [
     {
       "id": "",
-      "name": "00-MUST-HAVE",
+      "name": "00",
       "protect_file_link": false
     },
   ]
