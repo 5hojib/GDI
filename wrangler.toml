@@ -3,9 +3,14 @@ main = "src/worker.js"
 type = "javascript"
 compatibility_date = "2023-08-23"
 
-[[modules]]
+[[module]]
+type = "commonjs"
+path = "./src/worker.js"
+
+[[module]]
 type = "commonjs"
 path = "./src/app.js"
 
 [build]
-upload = { format = "service-worker" }
+command = ""
+upload = { dir = "./src" }
