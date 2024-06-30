@@ -8,6 +8,9 @@
     "@rollup/plugin-inject": "^4.0.0",
     "@jridgewell/sourcemap-codec": "^1.4.9",
     "webpack": "^5.0.0",
-    "webpack-cli": "^4.0.0"
+    "webpack-cli": "^4.0.0",
+    "babel-loader": "^8.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0"
   }
 }

@@ -1,11 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './worker.js', // Entry point
+  entry: './worker.js', // Your entry point
   output: {
-    filename: 'worker.js',
+    filename: 'worker.js', // Output file name
     path: path.resolve(__dirname, 'dist'), // Output directory
   },
+  mode: 'production', // Set the mode to 'production' or 'development'
   module: {
     rules: [
       {
@@ -20,5 +21,5 @@ module.exports = {
       },
     ],
   },
-  target: 'webworker', // Ensures compatibility with Cloudflare Workers
+  target: 'webworker', // Ensures the output is compatible with Cloudflare Workers
 };
