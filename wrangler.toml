@@ -1,7 +1,7 @@
 name = "new-test"
-main = "dist/worker.js"
+main = "src/worker.js"
 type = "javascript"
 compatibility_date = "2023-08-23"
 
 [build]
-command = "npm run build"
+upload = { dir = "./src" } # Upload all files in the src directory
