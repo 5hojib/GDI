@@ -17,7 +17,7 @@ jobs:
       run: npm install -g wrangler
 
     - name: Copy src directory
-      run: cp -r src
+      run: mkdir -p dist && cp -r src/* dist/
 
     - name: Publish to Cloudflare Workers
       env:

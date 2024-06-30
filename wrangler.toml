@@ -1,8 +1,8 @@
 name = "new-test"
-main = "src/worker.js"
+main = "dist/worker.js"
 compatibility_date = "2023-08-23"
 
 [[rules]]
 type = "ESModule"
-globs = ["src/**"]
+globs = ["dist/**"]
 fallthrough = true
