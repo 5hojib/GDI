@@ -1,8 +1,8 @@
 name = "new-test"
-main = "dist/worker.js"
+main = "src/worker.js"
 compatibility_date = "2023-08-23"
 
 [[rules]]
 type = "ESModule"
-globs = ["dist/**"]
+globs = ["src/*"]  # Update here to push all files from src directory
 fallthrough = true
