@@ -3,10 +3,13 @@ main = "src/worker.js"
 compatibility_date = "2023-08-23"
 
 [[rules]]
-include = "src/**"
+type = "ESModule"
+globs = ["src/**"]
 
 [[rules]]
-include = "src/worker.js"
+type = "CommonJS"
+globs = ["src/worker.js"]
 
 [[rules]]
-include = "src/app.js"
+type = "CommonJS"
+globs = ["src/app.js"]
