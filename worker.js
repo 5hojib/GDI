@@ -1,45 +1,38 @@
-// Software: GDI-JS
-// Version: 2.3.6
-// Author: Parveen Bhadoo
-// Website: https://gdi.js.org
-
-// add multiple serviceaccounts as {}, {}, {}, random account will be selected by each time app is opened.
-
-const environment = 'production'; // This Variable Decides the environment of the app. 'production' or 'development' or 'local'
- 
+const environment = 'production';
 const serviceaccounts = [];
-const randomserviceaccount = serviceaccounts[Math.floor(Math.random() * serviceaccounts.length)]; // DO NOT TOUCH THIS
-const domains_for_dl = [''] // add multiple cloudflare addresses to balance the load on download/stream servers, eg. ['https://testing.fetchgoogleapi.workers.dev', 'https://testing2.fetchgoogleapi2.workers.dev']
-const domain_for_dl = domains_for_dl[Math.floor(Math.random() * domains_for_dl.length)]; // DO NOT TOUCH THIS
-const blocked_region = ['']; // add regional codes seperated by comma, eg. ['IN', 'US', 'PK']
-const blocked_asn = []; // add ASN numbers from http://www.bgplookingglass.com/list-of-autonomous-system-numbers, eg. [16509, 12345]
+const randomserviceaccount = serviceaccounts[Math.floor(Math.random() * serviceaccounts.length)];
+const domains_for_dl = [''];
+const domain_for_dl = domains_for_dl[Math.floor(Math.random() * domains_for_dl.length)];
+const blocked_region = [''];
+const blocked_asn = [];
 const authConfig = {
-  "siteName": "Google Drive Index", // Website name
-  "client_id": "", // Client id from Google Cloud Console
-  "client_secret": "", // Client Secret from Google Cloud Console
-  "refresh_token": "", // Authorize token
-  "service_account": false, // true if you're using Service Account instead of user account
-  "service_account_json": randomserviceaccount, // don't touch this one
+  "siteName": "Google Drive Index",
+  "client_id": "",
+  "client_secret": "",
+  "refresh_token": "",
+  "service_account": false,
+  "service_account_json": randomserviceaccount,
   "files_list_page_size": 100,
   "search_result_list_page_size": 100,
   "enable_cors_file_down": false,
-  "enable_password_file_verify": false, // support for .password file not working right now
-  "direct_link_protection": false, // protects direct links with Display UI
-  "disable_anonymous_download": false, // disables direct links without session
-  "file_link_expiry": 7, // expire file link in set number of days
-  "search_all_drives": true, // search all of your drives instead of current drive if set to true
-  "enable_login": false, // set to true if you want to add login system
-  "enable_signup": false, // set to true if you want to add signup system
-  "enable_social_login": false, // set to true if you want to add social login system
-  "google_client_id_for_login": "", // Google Client ID for Login
-  "google_client_secret_for_login": "", // Google Client Secret for Login
-  "redirect_domain": "", // Domain for login redirect eg. https://example.com
-  "login_database": "Local", // KV or Local
-  "login_days": 7, // days to keep logged in
-  "enable_ip_lock": false, // set to true if you want to lock user downloads to user IP
-  "single_session": false, // set to true if you want to allow only one session per user
-  "ip_changed_action": false, // set to true if you want to logout user if IP changed
-  "users_list": [{
+  "enable_password_file_verify": false,
+  "direct_link_protection": false,
+  "disable_anonymous_download": false,
+  "file_link_expiry": 7,
+  "search_all_drives": true,
+  "enable_login": false,
+  "enable_signup": false,
+  "enable_social_login": false,
+  "google_client_id_for_login": "",
+  "google_client_secret_for_login": "",
+  "redirect_domain": "",
+  "login_database": "Local",
+  "login_days": 7,
+  "enable_ip_lock": false,
+  "single_session": false,
+  "ip_changed_action": false,
+  "users_list": [
+    {
       "username": "admin",
       "password": "admin",
     },
@@ -53,82 +46,73 @@ const authConfig = {
       "id": "",
       "name": "00-MUST-HAVE",
       "protect_file_link": false
-  },
+    },
   ]
 };
-const crypto_base_key = "3225f86e99e205347b4310e437253bfd" // Example 256 bit key used, generate your own.
-const hmac_base_key = "4d1fbf294186b82d74fff2494c04012364200263d6a36123db0bd08d6be1423c" // Example 256 bit key used, generate your own.
-const encrypt_iv = new Uint8Array([247, 254, 106, 195, 32, 148, 131, 244, 222, 133, 26, 182, 20, 138, 215, 81]); // Example 128 bit IV used, generate your own.
+const crypto_base_key = "3225f86e99e205347b4310e437253bfd";
+const hmac_base_key = "4d1fbf294186b82d74fff2494c04012364200263d6a36123db0bd08d6be1423c";
+const encrypt_iv = new Uint8Array([247, 254, 106, 195, 32, 148, 131, 244, 222, 133, 26, 182, 20, 138, 215, 81]);
 const uiConfig = {
-  "theme": "darkly", // switch between themes, default set to slate, select from https://gitlab.com/GoogleDriveIndex/Google-Drive-Index
-  "version": "2.3.6", // don't touch this one. get latest code using generator at https://bdi-generator.hashhackers.com
-  // If you're using Image then set to true, If you want text then set it to false
-  "logo_image": true, // true if you're using image link in next option.
-  "logo_height": "", // only if logo_image is true
-  "logo_width": "100px", // only if logo_image is true
+  "theme": "darkly",
+  "version": "2.3.6",
+  "logo_image": true,
+  "logo_height": "",
+  "logo_width": "100px",
   "favicon": "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/favicon.ico",
-  // if logo is true then link otherwise just text for name
   "logo_link_name": "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/bhadoo-cloud-logo-white.svg",
-  "login_image": "https://i.imgur.com/5fHELJr.png", // Login page logo image
-  "fixed_header": true, // If you want the footer to be flexible or fixed.
-  "header_padding": "80", // Value 80 for fixed header, Value 20 for flexible header. Required to be changed accordingly in some themes.
-  "nav_link_1": "Home", // change navigation link name
-  "nav_link_3": "Current Path", // change navigation link name
-  "nav_link_4": "Contact", // change navigation link name
-  "fixed_footer": false, // If you want the footer to be flexible or fixed.
-  "hide_footer": true, // hides the footer from site entirely.
-  "header_style_class": "navbar-dark bg-primary", // navbar-dark bg-primary || navbar-dark bg-dark || navbar-light bg-light
-  "footer_style_class": "bg-primary", // bg-primary || bg-dark || bg-light
-  "css_a_tag_color": "white", // Color Name or Hex Code eg. #ffffff
-  "css_p_tag_color": "white", // Color Name or Hex Code eg. #ffffff
-  "folder_text_color": "white", // Color Name or Hex Code eg. #ffffff
-  "loading_spinner_class": "text-light", // https://getbootstrap.com/docs/5.0/components/spinners/#colors
-  "search_button_class": "btn btn-danger", // https://getbootstrap.com/docs/5.0/components/buttons/#examples
-  "path_nav_alert_class": "alert alert-primary", // https://getbootstrap.com/docs/4.0/components/alerts/#examples
-  "file_view_alert_class": "alert alert-danger", // https://getbootstrap.com/docs/4.0/components/alerts/#examples
-  "file_count_alert_class": "alert alert-secondary", // https://getbootstrap.com/docs/4.0/components/alerts/#examples
-  "contact_link": "https://telegram.dog/Telegram", // Link to Contact Button on Menu
-  "copyright_year": "2050", // year of copyright, can be anything like 2015 - 2020 or just 2020
-  "company_name": "The Bay Index", // Name next to copyright
-  "company_link": "https://telegram.dog/Telegram", // link of copyright name
-  "credit": true, // Set this to true to give us credit
-  "display_size": true, // Set this to false to hide display file size
-  "display_time": false, // Set this to false to hide display modified time for folder and files
-  "display_download": true, // Set this to false to hide download icon for folder and files on main index
-  "disable_player": false, // Set this to true to hide audio and video players
-  "disable_video_download": false, // Remove Download, Copy Button on Videos
-  "allow_selecting_files": true, // Disable Selecting Files to Download in Bulk
-  "second_domain_for_dl": false, // If you want to display other URL for Downloading to protect your main domain.
-  "poster": "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg", // Video poster URL or see Readme to how to load from Drive
-  "audioposter": "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/music.jpg", // Video poster URL or see Readme to how to load from Drive
-  "jsdelivr_cdn_src": "https://cdn.jsdelivr.net/npm/@googledrive/index", // If Project is Forked, then enter your GitHub repo
-  "render_head_md": true, // Render Head.md
-  "render_readme_md": true, // Render Readme.md
-  "unauthorized_owner_link": "https://telegram.dog/Telegram", // Unauthorized Error Page Link to Owner
-  "unauthorized_owner_email": "abuse@telegram.org", // Unauthorized Error Page Owner Email
-  "downloaddomain": domain_for_dl, // Ignore this and set domains at top of this page after service accounts.
-  "show_logout_button": authConfig.enable_login ? true : false, // set to true if you want to add logout button
-  "allow_file_copy": false, // set to false if you want to disable file copy
+  "login_image": "https://i.imgur.com/5fHELJr.png",
+  "fixed_header": true,
+  "header_padding": "80",
+  "nav_link_1": "Home",
+  "nav_link_3": "Current Path",
+  "nav_link_4": "Contact",
+  "fixed_footer": false,
+  "hide_footer": true,
+  "header_style_class": "navbar-dark bg-primary",
+  "footer_style_class": "bg-primary",
+  "css_a_tag_color": "white",
+  "css_p_tag_color": "white",
+  "folder_text_color": "white",
+  "loading_spinner_class": "text-light",
+  "search_button_class": "btn btn-danger",
+  "path_nav_alert_class": "alert alert-primary",
+  "file_view_alert_class": "alert alert-danger",
+  "file_count_alert_class": "alert alert-secondary",
+  "contact_link": "https://telegram.dog/Telegram",
+  "copyright_year": "2050",
+  "company_name": "The Bay Index",
+  "company_link": "https://telegram.dog/Telegram",
+  "credit": true,
+  "display_size": true,
+  "display_time": false,
+  "display_download": true,
+  "disable_player": false,
+  "disable_video_download": false,
+  "allow_selecting_files": true,
+  "second_domain_for_dl": false,
+  "poster": "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
+  "audioposter": "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/music.jpg",
+  "jsdelivr_cdn_src": "https://cdn.jsdelivr.net/npm/@googledrive/index",
+  "render_head_md": true,
+  "render_readme_md": true,
+  "unauthorized_owner_link": "https://telegram.dog/Telegram",
+  "unauthorized_owner_email": "abuse@telegram.org",
+  "downloaddomain": domain_for_dl,
+  "show_logout_button": authConfig.enable_login ? true : false,
+  "allow_file_copy": false,
 };
 
 const player_config = {
-  "player": "videojs", // videojs || plyr || dplayer || jwplayer
-  "videojs_version": "8.3.0", // Change videojs version in future when needed.
+  "player": "videojs",
+  "videojs_version": "8.3.0",
   "plyr_io_version": "3.7.8",
   "jwplayer_version": "8.16.2"
-}
+};
 
 // DON'T TOUCH BELOW THIS UNLESS YOU KNOW WHAT YOU'RE DOING
 var gds = [];
 const drive_list = authConfig.roots.map(it => it.id)
-let app_js_file
-if (environment === 'production') {
-  app_js_file = uiConfig.jsdelivr_cdn_src + '@' + uiConfig.version + '/src/app.min.js'
-} else if (environment === 'development') {
-  app_js_file = '/app.js'
-} else if (environment === 'local') {
-  app_js_file = 'http://127.0.0.1:5500/src/app.js'
-}
+let app_js_file = '/app.js'
 
 function html(current_drive_order = 0, model = {}) {
   return `<!DOCTYPE html>
@@ -679,12 +663,12 @@ async function genIntegrity(data, key = hmac_base_key) {
   const encoder = new TextEncoder();
   const dataBuffer = encoder.encode(data);
   const hmacKey = await crypto.subtle.importKey(
-      'raw',
-      encoder.encode(key), {
-          name: 'HMAC',
-          hash: 'SHA-256'
-      },
-      false,
+    'raw',
+    encoder.encode(key), {
+      name: 'HMAC',
+      hash: 'SHA-256'
+    },
+    false,
       ['sign']
   );
   const hmacBuffer = await crypto.subtle.sign('HMAC', hmacKey, dataBuffer);
@@ -1333,11 +1317,6 @@ async function handleRequest(request, event) {
       }
     });
   } else {
-    /*if (path.split('/').pop().toLowerCase() == ".password") {
-      return  new Response("", {
-        status: 404
-      });
-    }*/
     console.log(path)
     const file = await gd.get_single_file(path.slice(3));
     console.log(file)
@@ -1487,7 +1466,6 @@ async function apiRequest(request, gd, user_ip) {
 
     if (authConfig['enable_password_file_verify']) {
       let password = await gd.password(path);
-      // console.log("dir password", password);
       if (password && password.replace("\n", "") !== form.get('password')) {
         let html = `Y29kZWlzcHJvdGVjdGVk=0Xfi4icvJnclBCZy92dzNXYwJCI6ISZnF2czVWbiwSMwQDI6ISZk92YisHI6IicvJnclJyeYmFzZTY0aXNleGNsdWRlZA==`;
         return new Response(html, option);
@@ -1521,15 +1499,15 @@ async function apiRequest(request, gd, user_ip) {
 
 
     const encryptedFiles = list_result;
-	const data = JSON.stringify(encryptedFiles)
+    const data = JSON.stringify(encryptedFiles)
     return new Response(data, {
-		status: 200,
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-			'Content-Type': 'application/json;charset=UTF-8'
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json;charset=UTF-8'
 
-		}
-	});
+      }
+    });
   } else {
     let file_json = await gd.get_single_file(path);
     const {
@@ -1550,15 +1528,15 @@ async function apiRequest(request, gd, user_ip) {
 
     const encryptedFiles = encryptedFile;
 
-	const data = JSON.stringify(encryptedFiles)
+    const data = JSON.stringify(encryptedFiles)
     return new Response(data, {
-		status: 200,
-		headers: {
-			'Access-Control-Allow-Origin': '*',
-			'Content-Type': 'application/json;charset=UTF-8'
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json;charset=UTF-8'
 
-		}
-	});
+      }
+    });
   }
 }
 
@@ -1633,34 +1611,22 @@ async function handleId2Path(request, gd) {
 }
 
 async function findId2Path(gd, url) {
-	try {
-		let [path, prefix] = await gd.findPathById(url.searchParams.get('id'));
-		console.log(path, prefix)
-		if (!path) {
-			return new Response("Invalid URL");
-		} else if (url.searchParams.get('view') && url.searchParams.get('view') == 'true') {
-			//return new Response("https://" + url.hostname + "/" + prefix + ":" + path + "?a=view" || '');
-			return Response.redirect("https://" + url.hostname + "/" + prefix + ":" + path + "?a=view" || '', 302);
-		} else {
-			//return new Response("https://" + url.hostname + "/" + prefix + ":" + path + "?a=view" || '');
-			return Response.redirect("https://" + url.hostname + "/" + prefix + ":" + path || '', 302);
-		}
-	} catch (error) {
-		const encrypted_id = await encryptString(url.searchParams.get('id'), encrypt_iv)
-		return Response.redirect("https://" + url.hostname + "/fallback?id=" + encrypted_id || '', 302);
-	}
+  try {
+    let [path, prefix] = await gd.findPathById(url.searchParams.get('id'));
+    console.log(path, prefix)
+    if (!path) {
+      return new Response("Invalid URL");
+    } else if (url.searchParams.get('view') && url.searchParams.get('view') == 'true') {
+      return Response.redirect("https://" + url.hostname + "/" + prefix + ":" + path + "?a=view" || '', 302);
+    } else {
+      return Response.redirect("https://" + url.hostname + "/" + prefix + ":" + path || '', 302);
+    }
+  } catch (error) {
+    const encrypted_id = await encryptString(url.searchParams.get('id'), encrypt_iv)
+    return Response.redirect("https://" + url.hostname + "/fallback?id=" + encrypted_id || '', 302);
+  }
 }
 
-/*async function findItemById(gd, id) {
-  console.log(id)
-  const is_user_drive = this.root_type === DriveFixedTerms.gd_root_type.user_drive;
-  let url = `https://www.googleapis.com/drive/v3/files/${id}?fields=${DriveFixedTerms.default_file_fields}${is_user_drive ? '' : '&supportsAllDrives=true'}`;
-  let requestOption = await gd.requestOptions();
-  let res = await fetch(url, requestOption);
-  return await res.json();
-}*/
-
-// start of class googleDrive
 class googleDrive {
   constructor(authConfig, order) {
     this.order = order;
@@ -2013,57 +1979,6 @@ class googleDrive {
     return obj.files[0].id;
   }
 
-  /*async getAccessToken() {
-    console.log("accessToken");
-    if (this.authConfig.expires == undefined || this.authConfig.expires < Date.now()) {
-      const obj = await fetchAccessToken();
-      if (obj.access_token != undefined) {
-        this.authConfig.accessToken = obj.access_token;
-        this.authConfig.expires = Date.now() + 3500 * 1000;
-      }
-    }
-    return this.authConfig.accessToken;
-  }*/
-
-  /*async fetchAccessToken() {
-    console.log("fetchAccessToken");
-    const url = "https://www.googleapis.com/oauth2/v4/token";
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
-    var post_data;
-    if (this.authConfig.service_account && typeof this.authConfig.service_account_json != "undefined") {
-      const jwttoken = await JSONWebToken.generateGCPToken(this.authConfig.service_account_json);
-      post_data = {
-        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-        assertion: jwttoken,
-      };
-    } else {
-      post_data = {
-        client_id: this.authConfig.client_id,
-        client_secret: this.authConfig.client_secret,
-        refresh_token: this.authConfig.refresh_token,
-        grant_type: "refresh_token",
-      };
-    }
-
-    let requestOption = {
-      'method': 'POST',
-      'headers': headers,
-      'body': enQuery(post_data)
-    };
-
-    let response;
-    for (let i = 0; i < 3; i++) {
-      response = await fetch(url, requestOption);
-      if (response.ok) {
-        break;
-      }
-      await sleep(800 * (i + 1));
-    }
-    return await response.json();
-  }*/
-
   async fetch200(url, requestOption) {
     let response;
     for (let i = 0; i < 3; i++) {
@@ -2084,20 +1999,8 @@ class googleDrive {
       'headers': headers
     };
   }
-
-
-  /*sleep(ms) {
-    return new Promise(function(resolve, reject) {
-      let i = 0;
-      setTimeout(function() {
-        console.log('sleep' + ms);
-        i++;
-        if (i >= 2) reject(new Error('i>=2'));
-        else resolve(i);
-      }, ms);
-    })
-  }*/
 }
+
 // end of class googleDrive
 const drive = new googleDrive(authConfig, 0);
 async function download(id, range = '', inline) {
@@ -2158,12 +2061,6 @@ async function download(id, range = '', inline) {
     })
   } else {
     const details = await res.text()
-    /*const res = await fetch(`${uiConfig.jsdelivr_cdn_src}@${uiConfig.version}/assets/download_error.html`);
-    return new Response(await res.text(), {
-      headers: {
-        "content-type": "text/html;charset=UTF-8",
-      },
-    })*/
     return new Response(details, {})
   }
 }
@@ -2190,6 +2087,5 @@ function decodeJwtToken(token) {
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request, event).catch(
     (err) => new Response("Report this page when asked at the time of support... ==> " + err.stack, { status: 500 })
-  )
-  );
+  ));
 });

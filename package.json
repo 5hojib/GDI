@@ -1,6 +1,6 @@
 {
-  "name": "@googledrive/index",
-  "version": "2.3.6",
+  "name": "GDI",
+  "version": "1.0.0",
   "private": false,
   "scripts": {
     "deploy": "wrangler publish",
