@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './worker.js', // Your entry point
+  entry: './src/worker.js', // Adjust the path as per your actual file structure
   output: {
     filename: 'worker.js', // Output file name
     path: path.resolve(__dirname, 'dist'), // Output directory
