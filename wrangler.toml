@@ -3,5 +3,9 @@ main = "src/worker.js"
 type = "javascript"
 compatibility_date = "2023-08-23"
 
+[[modules]]
+type = "commonjs"
+path = "./src/app.js"
+
 [build]
-upload = { dir = "./src" } # Upload all files in the src directory
+upload = { format = "service-worker" }
