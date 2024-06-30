@@ -1,16 +1,7 @@
 name = "new-test"
 main = "src/worker.js"
-type = "javascript"
 compatibility_date = "2023-08-23"
-
-[[module]]
-type = "commonjs"
-path = "./src/worker.js"
-
-[[module]]
-type = "commonjs"
-path = "./src/app.js"
 
 [build]
 command = ""
-upload = { dir = "./src" }
+upload = "src/**"
