@@ -2,5 +2,11 @@ name = "new-test"
 main = "src/worker.js"
 compatibility_date = "2023-08-23"
 
-[build.upload]
-dir = "src"
+[[rules]]
+include = "src/**"
+
+[[rules]]
+include = "src/worker.js"
+
+[[rules]]
+include = "src/app.js"
