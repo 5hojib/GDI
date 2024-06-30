@@ -1,7 +1,3 @@
-// src/worker.js
-import './app.js';
-
-// existing worker code...
 const environment = 'production';
 const serviceaccounts = [];
 const randomserviceaccount = serviceaccounts[Math.floor(Math.random() * serviceaccounts.length)];
