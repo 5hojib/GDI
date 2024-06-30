@@ -3,33 +3,30 @@ name: Deploy to Cloudflare Workers
 on:
   push:
     branches:
-      - main
+      - main  # Adjust branch name as needed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'  # Adjust the version as necessary
+      - name: Upload Worker Script
+        run: |
+          curl -X PUT \
+            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+            -H "Content-Type: application/javascript" \
+            --data-binary @src/worker.js \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/scripts/worker"
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Create ZIP archive
-      run: zip -r worker.zip src/
-
-    - name: Deploy to Cloudflare Workers
-      env:
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      run: |
-        curl -X PUT "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/scripts/new-test" \
-        -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-        -H "Content-Type: application/javascript+zip" \
-        --data-binary @worker.zip
+      - name: Upload App Script
+        run: |
+          curl -X PUT \
+            -H "X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}" \
+            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}" \
+            -H "Content-Type: application/javascript" \
+            --data-binary @src/app.js \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/scripts/app"
