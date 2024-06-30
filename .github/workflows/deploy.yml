@@ -31,5 +31,5 @@ jobs:
       run: |
         curl -X PUT "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/scripts/new-test" \
         -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-        -H "Content-Type: application/zip" \
+        -H "Content-Type: application/javascript+zip" \
         --data-binary @worker.zip
