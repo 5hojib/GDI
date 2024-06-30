@@ -1,18 +1,13 @@
 {
   "name": "GDI",
   "version": "1.0.0",
-  "private": false,
   "scripts": {
-    "deploy": "wrangler publish",
-    "start": "wrangler dev"
+    "build": "webpack"
   },
   "devDependencies": {
     "@rollup/plugin-inject": "^4.0.0",
     "@jridgewell/sourcemap-codec": "^1.4.9",
     "webpack": "^5.0.0",
-    "webpack-cli": "^4.0.0",
-    "@cloudflare/workers-types": "^4.20230419.0",
-    "typescript": "^5.0.4",
-    "wrangler": "^3.4.0"
+    "webpack-cli": "^4.0.0"
   }
 }
